@@ -1,0 +1,58 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Thu Mar 21 20:50:05 2019
+
+@author: cyq
+"""
+
+## 1 gradient
+'''
+from sympy import S
+from sympy.calculus import finite_diff_weights
+if __name__ == "__main__":
+    
+    g2 = x**2 + 3*y
+    l=g2.diff(x)
+    print(l)
+'''
+import scipy.io as scio
+from sympy import symbols, sin, cos, pi
+from sympy.diffgeom import Manifold, Patch, CoordSystem
+from sympy.simplify import simplify
+
+if __name__ == '__main__':
+    dataFile = '/home/cyq/Desktop/code/my_driving/data/encourter_data.mat'
+    data1 = scio.loadmat(dataFile)
+    dataFile2 = '/home/cyq/Desktop/code/my_driving/data/encourter_name.mat'
+    data2 = scio.loadmat(dataFile2)
+    print (type(data1))
+    print(data1['encourter_data'][8][8])
+    '''
+    r, theta1,theta2 = symbols('r, theta1,theta2')
+    m = Manifold('M', 3)
+    patch = Patch('P', m)
+    rect = CoordSystem('rect', patch)
+    polar = CoordSystem('polar', patch)
+    rect in patch.coord_systems
+    polar.connect_to(rect, [r, theta1,theta2], [r*cos(theta1), r*sin(theta2),cos(theta1), sin(theta2)])
+    print(polar.jacobian(rect, [r, theta1,theta2]))
+    print(polar.jacobian(rect,  [1, theta1,theta2]))
+    '''
+#def jabi()
+    '''
+    r,theta1,theta2 = symbols('r, theta1,theta2')
+    m = Manifold('M', 2)
+    patch = Patch('P', m)
+    rect = CoordSystem('rect', patch)
+    polar = CoordSystem('polar', patch)
+    rect in patch.coord_systems
+    #polar.connect_to(rect, [theta1,theta2], [r*cos(theta1), r*sin(theta2),cos(theta1), sin(theta2)])
+    polar.connect_to(rect, [theta1,theta2], [r*cos(theta1)+r*sin(theta2)+cos(theta1)+sin(theta2)])
+    g=polar.jacobian(rect, [theta1,theta2])
+    print(polar.jacobian(rect, [theta1,theta2]))
+    print(g.shape())
+    '''
+    x=Matrix([r*cos(theta1)+r*sin(theta2)+cos(theta1)+sin(theta2)])
+    y=Matrix([theta1])
+    print(x.jacobian(y))
